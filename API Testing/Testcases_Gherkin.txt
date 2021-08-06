@@ -1,0 +1,92 @@
+@1 Feature: GET Return details for a group
+
+ Scenario: the user makes a successful get transaction request
+   GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a <group_guid> in the request using the respective token
+   THEN the user should get a successful response 
+    AND  the response should be for the respective "group_guid" 
+
+
+ Scenario : the user gets error on get transaction request
+    GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a different <group_guid> in the request 
+   THEN the user should get a error response 
+    AND  the response should be having error "forbidden access"
+
+| group_guid  | 
+| Bl83agh17lO |
+| Ba1bc23dE4F |
+
+
+Similarly other scenarios
+
+@2 Feature : GET Returns a list of Bitlinks sorted by group
+
+Scenario: the user makes a successful get transaction for sorting by clicks
+   GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a "group_guid" & sort criteria "clicks" in the "GET sort request" using the respective token
+   THEN the user should get a successful response 
+    AND  the response should have the list of Bitlinks sorted with respect to the "group_guid"
+
+Scenario: the user makes a successful get transaction for sorting by unit of time
+   GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a <group_guid> & sort criteria "unit_of_time" in the "GET SORT request" using the respective token
+   THEN the user should get a successful response 
+    AND  the response should have the list of Bitlinks sorted with respect to the "group_guid" and "unit of time"
+
+Scenario: the user makes a successful get transaction for sorting by unit of time
+   GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a "group_guid" & sort criteria "unit_reference" or "size" or "timeunits" in the "GET sort request" using the respective token
+   THEN the user should get a successful response 
+    AND  the response should have the list of Bitlinks sorted with respect to the "group_guid" and "unit of time
+
+Scenario: the user gets Not found error for get sorting transaction
+
+   GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a wrong "GET sort request" using the respective token
+   THEN the user should get a error response 
+    AND  the response should be 404 Page not found
+
+
+Examples:
+| unit_of_time|    |unit reference| | timeunits|
+| minute      |    |current time  | |  -1      |
+| day         | 
+| hour        | 
+| week        | 
+| month       | 
+
+
+@3 Feature : POST Converts a long url to a Bitlink and sets additional parameters
+
+Scenario: Scenario: the user makes a successful transaction to convert long URL to bitlink
+   GIVEN the user connects to the authentication service and generates the token and use it for POST transaction
+   WHEN the user sends a long URL in the "Post create Bitlink request" 
+   THEN the user should get a successful response 
+    AND  the response should converts the long url to a Bitlink and sets additional parameters.
+
+
+Scenario: Scenario: the user makes a successful transaction to convert long URL to bitlink
+   GIVEN the user connects to the authentication service and generates the token and use it for POST transaction
+   WHEN the user sends a long URL & other parameters in the "Post create Bitlink request" 
+   THEN the user should get a successful response 
+    AND  the response should converts the long url to a Bitlink and sets additional parameters.
+
+Scenario: Scenario: the user gets Payment Required error for Post Create Bitlink transaction
+   GIVEN the user connects to the authentication service and generates the token and use it for POST transaction
+   WHEN the user sends a long URL & "deeplinks" in the "Post create Bitlink request" 
+   THEN the user should get a error response 
+    AND  the response should be 402 Payment required
+
+Scenario: the user gets Bad Request error for Post Create Bitlink transaction
+  GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a wrong field in "POST request" using the respective token
+   THEN the user should get a error response 
+    AND  the response should be 400 Bad Request
+
+Scenario: the user gets Not found error for Post Create Bitlink transaction
+  GIVEN the user connects to the authentication service and generates the token
+   WHEN the user sends a wrong URI in"POST request" using the respective token
+   THEN the user should get a error response 
+    AND  the response should be 404 Page not found
+   

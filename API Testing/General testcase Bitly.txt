@@ -1,0 +1,27 @@
+Testcase:
+
+Feature: GET
+
+Scenario: the user makes a successful get transaction request
+
+Given the user authenticates using "<login_request>"
+
+And the user connects to the "transaction" service 
+
+When the user sends a "get transactions" request using "<transaction_request>"
+
+Then I should get a "<response_status>" response
+
+And the response should match "<transaction_response>"
+
+
+
+Examples:
+
+| login_request                        | transaction_request                     | response_status | transaction_response |
+
+| login_request_user_access.json       | get_transactions_request_user1guid.json | successful      | transaction_response1.json |
+
+| login_request_user_no access.json    | get_transactions_request_user2guid.json | failure         | forbidden_access_error.json |
+
+| login_request_.json                  | invalid_token_request.json              | failure         | authentication_error.json |
